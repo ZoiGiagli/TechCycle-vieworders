@@ -17,6 +17,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/manager/**").hasRole("MANAGER")
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )

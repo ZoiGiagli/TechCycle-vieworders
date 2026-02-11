@@ -1,3 +1,5 @@
+/* Orders Data */
+
 INSERT INTO orders
 (order_id, payment_method, shopping_cart_id, customer_username, customer_email, home_address, total_price, date_order)
 VALUES

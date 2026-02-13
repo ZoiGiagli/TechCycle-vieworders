@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/manager/orders", true)
+                        .defaultSuccessUrl("/manager/managerHome", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());

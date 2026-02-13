@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/manager/orders", true)
                         .permitAll()
                 )
-                .logout(Customizer.withDefaults());
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }

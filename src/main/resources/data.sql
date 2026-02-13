@@ -12,4 +12,4 @@ VALUES
     ('b2c3d4e5-f6a7-48b2-c234-bcdefa234567', 'Cash on Delivery', 38, 'eleni', 'eleni.t@gmail.com', 'Parnithas 5', 670.00, DATE '2026-01-16'),
     ('c3d4e5f6-a7b8-49c3-d345-cdefab345678', 'Cash on Delivery', 72, 'nikosV', 'nikosMal@gmail.com', 'Panepistimiou 30', 700.00, DATE '2026-01-29'),
     ('d4e5f6a7-b8c9-40d4-e456-defabc456789', 'Cash on Delivery', 70, 'sofiaM', 'sofia@gmail.com', 'Parnithas 27', 950.00, DATE '2026-01-28'),
-    ('e5f6a7b8-c9d0-41e5-f567-efabcd567890', 'Cash on Delivery', 39, 'andreasL', 'andreas.l@gmail.com', 'Βουλιαγμένης 200', 1250.00, DATE '2026-01-17'),
+    ('e5f6a7b8-c9d0-41e5-f567-efabcd567890', 'Cash on Delivery', 39, 'andreasL', 'andreas.l@gmail.com', 'Βουλιαγμένης 200', 1250.00, DATE '2026-01-17');

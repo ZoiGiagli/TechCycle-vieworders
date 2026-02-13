@@ -32,6 +32,7 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager users() {
+        //Manager Credentials
         UserDetails manager = User.withUsername("manager")
                 .password("{noop}1234")
                 .roles("MANAGER")

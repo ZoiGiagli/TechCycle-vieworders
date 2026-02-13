@@ -25,15 +25,12 @@ public class OrderRepository {
      */
 
     public List<Order> findAllOrders() {
-
         String sql = "SELECT * FROM orders ORDER BY date_order DESC";
-
         return jdbcTemplate.query(sql, orderRowMapper);
     }
 
-    // Maps each row of the ResultSet to an Order object
+    // Maps database rows to order objects
     private final RowMapper<Order> orderRowMapper = (rs, rowNum) -> {
-
         Order order = new Order();
         order.setOrderId(rs.getString("order_id"));
         order.setPaymentMethod(rs.getString("payment_method"));
@@ -45,5 +42,6 @@ public class OrderRepository {
         order.setDateOrder(rs.getDate("date_order").toLocalDate());
 
         return order;
+
     };
 }

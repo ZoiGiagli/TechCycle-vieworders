@@ -3,7 +3,6 @@ package com.myapp.techcycle.service;
 import com.myapp.techcycle.model.Order;
 import com.myapp.techcycle.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class OrderService {
 
     /**
      * Returns all orders.
-     * In case of a database error, returns an empty list.
+     * In case of a database error returns an empty list.
      */
 
     public List<Order> getAllOrders() {

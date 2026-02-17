@@ -47,3 +47,72 @@ Skipped the “View Orders” button: Ο χρήστης (Sales Manager) δεν �
 εισάγετε username: manager και password: 1234. Στη συνέχεια πατήστε το κουμπί ‘Sign in’ που θα σας μεταφέρει στην αρχική σελίδα του Υπεύθυνου Πωλήσεων. Στον πίνακα διαχείρισης πατήστε το
 κουμπί «Προβολή» που υπάρχει κάτω από το κουτί View Orders (Σημείωση: Οι επιλογές “Upload Products” και «Προϊόντα» δεν είναι λειτουργικές καθώς υλοποιούνται σε διαφορετική περίπτωση χρήσης.
 Το κουμπί της αποσύνδεσης είναι λειτουργικό). Θα μεταφερθείτε στη σελίδα View Orders όπου είναι ορατά τα στοιχεία για όλες τις καταχωρημένες παραγγελίες. 
+
+
+-	Χρήση AI
+
+Για τη παρούσα εργασία χρησιμοποίησα τη βοήθεια της τεχνητής νοημοσύνης για φτιάξω τον έλεγχο authentication του χρήστη στο αρχείο ‘SecurityConfig’, 
+καθώς δεν είχα κάποια προηγούμενη εμπειρία ή γνώσεις σχετικά με το security framework του Spring Boot. Χρησιμοποίησα το μοντέλο ChatGPT στην έκδοση 5.2 με τη δωρεάν χρήση του για περιορισμένο χρόνο. 
+
+Σημείωση: Ο κώδικας του AI δε χρησιμοποιήθηκε αυτούσιος αλλά έγιναν αρκετές αλλαγές που είναι ορατές στο αποθετήριο του github.
+
+Προτροπή:
+«Θέλω να φτιάξω για μία εργασία το use case μιας εφαρμογής στο spring boot. η περίπτωση χρήσης που υλοποιώ ονομάζεται 'προβολή παραγγελιών' και αφορά τη δυνατότητα του υπεύθυνου πωλήσεων μιας ηλεκτρονικής εφαρμογής αγοραπωλησίας να βλέπει τα στοιχεία των παραγγελιών των πελατών. είναι απαραίτητη η σύνδεση/ ταυτοποίηση του χρήστη ώστε να μπορεί να δει αυτά τα στοιχεία. θέλω να μου φτιάξεις ένα αρχείο Security Config όπου να γίνεται η ταυτοποίηση του χρήστη και να υπάρχει και δυνατότητα εξόδου. Ο χρήστης έχει username manager και κωδικό 1234, και έχει τον ρόλο του Manager. μετά τη σύνδεση θα μεταφέρεται στη σελίδα με τις παραγγελίες. Στο spring initializr είχα χρησιμοποιήσει το dependency Spring Security. Ο κώδικας θέλω να είναι απλός καθώς η περίπτωση χρήσης σύνδεσης χρήστη υλοποιείται ξεχωριστά στην εργασία.»
+
+Απάντηση:
+
+« Παρακάτω είναι ένα απλό SecurityConfig για Spring Boot με Spring Security, που καλύπτει:
+•	Ταυτοποίηση χρήστη (in-memory) με username: manager και password: 1234
+•	Ρόλο MANAGER
+•	Απαίτηση να είναι ο χρήστης συνδεδεμένος για να δει οτιδήποτε (π.χ. τη σελίδα παραγγελιών)
+•	Αυτόματη μεταφορά μετά το login στη σελίδα προβολής παραγγελιών (/manager/orders)
+•	Logout (έξοδος) με τις default ρυθμίσεις
+Με αυτό τον τρόπο “κλειδώνεις” την περίπτωση χρήσης Προβολή Παραγγελιών, ώστε μόνο ο υπεύθυνος πωλήσεων (Manager) να μπορεί να δει τα στοιχεία των παραγγελιών μετά από σύνδεση.
+package com.myapp.techcycle.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/error").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/manager/orders", true)
+                        .permitAll()
+                )
+                .logout(Customizer.withDefaults());
+
+        return http.build();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager users() {
+        UserDetails manager = User.withUsername("manager")
+                .password("{noop}1234")
+                .roles("MANAGER")
+                .build();
+
+        return new InMemoryUserDetailsManager(manager);
+    }
+
+}
+Πώς “δένει” με το use case «Προβολή Παραγγελιών»
+•	Όταν κάποιος πάει να ανοίξει τη σελίδα παραγγελιών (ή οποιαδήποτε άλλη), αν δεν είναι συνδεδεμένος, το Spring Security τον στέλνει στη φόρμα login.
+•	Με σωστά στοιχεία (manager / 1234) γίνεται επιτυχής ταυτοποίηση και ο χρήστης μεταφέρεται αυτόματα στο endpoint /manager/orders.
+•	Η έξοδος γίνεται από το default endpoint logout του Spring Security (/logout) και μετά ο χρήστης δεν θα έχει πρόσβαση χωρίς νέα σύνδεση.
+Αν θέλεις, μπορώ να σου δώσω και ένα πολύ μικρό παράδειγμα controller endpoint για /manager/orders ώστε να “δένει” ολοκληρωμένα με την εργασία.»
+

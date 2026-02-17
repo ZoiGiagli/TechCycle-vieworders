@@ -13,12 +13,14 @@ TechCycle – View Orders Use Case
 Η περίπτωση χρήσης ‘View Orders’ αφορά τη δυνατότητα του Υπεύθυνου Πωλήσεων (Sales Manager) να βλέπει τα στοιχεία των παραγγελιών που έχουν καταχωρηθεί
 στο σύστημα. Πιο συγκεκριμένα, ο χρήστης από την αρχική οθόνη της εφαρμογής επιλέγει να συνδεθεί με username ‘manager’ και κωδικό ΄1234’ και έπειτα
 μεταφέρεται στην αρχική οθόνη του Manager (Manager Home) όπου πατάει το κουμπί ‘View Orders’, ώστε να δει τις παραγγελίες που έχουν πραγματοποιηθεί από τους πελάτες.
+
 Actor: Sales Manager
 
 Πληροφορίες που εμφανίζονται για κάθε παραγγελία:
 OrderID, Payment Method, Shopping cart ID, Customer Username, Customer Email, Home Address, Total Price, Date
 
 Εναλλακτικές ροές: 
+
 User is not logged in: Ο χρήστης (Sales Manager) πληκτρολόγησε λάθος τα στοιχεία του, με αποτέλεσμα το σύστημα να μην αναγνωρίζει τα user credentials του. 
 Skipped the “View Orders” button: Ο χρήστης (Sales Manager) δεν έχει πατήσει το κουμπί “View Orders” και συνεπώς δεν μπορεί μεταβεί στην κατάλληλη οθόνη και να δει το πλήθος των παραγγελιών που έχουν γίνει.
 

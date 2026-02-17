@@ -68,6 +68,7 @@ Skipped the “View Orders” button: Ο χρήστης (Sales Manager) δεν �
 •	Αυτόματη μεταφορά μετά το login στη σελίδα προβολής παραγγελιών (/manager/orders)
 •	Logout (έξοδος) με τις default ρυθμίσεις
 Με αυτό τον τρόπο “κλειδώνεις” την περίπτωση χρήσης Προβολή Παραγγελιών, ώστε μόνο ο υπεύθυνος πωλήσεων (Manager) να μπορεί να δει τα στοιχεία των παραγγελιών μετά από σύνδεση.
+
 package com.myapp.techcycle.config;
 
 import org.springframework.context.annotation.Bean;
